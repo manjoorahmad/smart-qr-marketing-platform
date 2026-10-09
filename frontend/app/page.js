@@ -56,7 +56,7 @@ export default function Home() {
 
       // Backend Analytics API
       const response = await fetch(
-        "http://:5000/api/analytics",
+        "https://smart-qr-marketing-platform.onrender.com/api/analytics",
         {
           method: "GET",
 
