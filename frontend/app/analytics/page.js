@@ -30,12 +30,11 @@ export default function Analytics() {
 
       const token = localStorage.getItem("token");
 
-      // Agar token nahi hai
-      if (!token) {
-        setError("Please login first.");
-        setLoading(false);
-        return;
-      }
+       // Agar token nahi hai to Login page par bhejo
+       if (!token) {
+       window.location.replace("/login");
+       return;
+       }
 
 
       // Backend Analytics API call
