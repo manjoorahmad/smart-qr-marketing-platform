@@ -146,7 +146,7 @@ const generateQRCode = async (req, res) => {
     }
 
     // QR scan hone par backend ke scan route par jayega
-    const scanUrl = `http://localhost:5000/api/scans/${campaign._id}`;
+    const scanUrl = `https://smart-qr-marketing-platform.onrender.com/api/scans/${campaign._id}`;
 
     // Scan URL ka QR code generate karna
     const qrCode = await QRCode.toDataURL(scanUrl);
