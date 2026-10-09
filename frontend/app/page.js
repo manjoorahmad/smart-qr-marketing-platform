@@ -125,15 +125,31 @@ export default function Home() {
 
   useEffect(() => {
 
-    // Pehle login check hoga
-    if (checkLogin()) {
-
-      // Login hai to analytics fetch hogi
-      fetchAnalytics();
-
+  // Page visible hone par login check hoga
+  const handleVisibilityChange = () => {
+    if (document.visibilityState === "visible") {
+      if (checkLogin()) {
+        fetchAnalytics();
+      }
     }
+  };
 
-  }, []);
+  // Page load hote hi login check
+  if (checkLogin()) {
+    fetchAnalytics();
+  }
+
+  // Page dobara visible hone par bhi check
+  window.addEventListener("pageshow", handleVisibilityChange);
+  document.addEventListener("visibilitychange", handleVisibilityChange);
+
+  // Cleanup
+  return () => {
+    window.removeEventListener("pageshow", handleVisibilityChange);
+    document.removeEventListener("visibilitychange", handleVisibilityChange);
+  };
+
+}, []);
 
 
   // =========================
