@@ -56,7 +56,7 @@ export default function Home() {
 
       // Backend Analytics API
       const response = await fetch(
-        "http://localhost:5000/api/analytics",
+        "http://:5000/api/analytics",
         {
           method: "GET",
 

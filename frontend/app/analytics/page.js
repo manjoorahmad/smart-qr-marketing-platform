@@ -40,7 +40,7 @@ export default function Analytics() {
 
       // Backend Analytics API call
       const response = await fetch(
-        "http://localhost:5000/api/analytics",
+        "https://smart-qr-marketing-platform.onrender.com/api/analytics",
         {
           method: "GET",
           headers: {

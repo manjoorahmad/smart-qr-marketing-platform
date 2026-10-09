@@ -42,7 +42,7 @@ export default function Profile() {
 
       // Backend profile API
       const response = await fetch(
-        "http://localhost:5000/api/users/profile",
+        "https://smart-qr-marketing-platform.onrender.com/api/users/profile",
         {
           method: "GET",
           headers: {

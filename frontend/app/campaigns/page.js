@@ -76,7 +76,7 @@ export default function Campaigns() {
       }
 
       const response = await fetch(
-        "http://localhost:5000/api/campaigns",
+       "https://smart-qr-marketing-platform.onrender.com/api/campaigns",
         {
           method: "GET",
 
@@ -136,7 +136,7 @@ export default function Campaigns() {
       }
 
       const response = await fetch(
-        "http://localhost:5000/api/campaigns",
+        "https://smart-qr-marketing-platform.onrender.com/api/campaigns",
         {
           method: "POST",
 
@@ -227,7 +227,7 @@ export default function Campaigns() {
       }
 
       const response = await fetch(
-        `http://localhost:5000/api/campaigns/${editId}`,
+        `https://smart-qr-marketing-platform.onrender.com/api/campaigns/${editId}`,
         {
           method: "PUT",
           headers: {
@@ -277,7 +277,7 @@ export default function Campaigns() {
       }
 
       const response = await fetch(
-        `http://localhost:5000/api/campaigns/${campaignId}/qr`,
+        `https://smart-qr-marketing-platform.onrender.com/api/campaigns/${campaignId}/qr`,
         {
           method: "POST",
 
@@ -343,7 +343,7 @@ export default function Campaigns() {
 
       // Backend Delete API
       const response = await fetch(
-        `http://localhost:5000/api/campaigns/${campaignId}`,
+       `https://smart-qr-marketing-platform.onrender.com/api/campaigns/${campaignId}`,
         {
           method: "DELETE",
 
@@ -783,18 +783,19 @@ export default function Campaigns() {
 
           ) : (
 
-    campaigns   
-      .filter((campaign) => {
-        const matchesName = campaign.name
-         .toLowerCase()
-          .includes(searchTerm.toLowerCase());
+    campaigns
+            
+     .filter((campaign) => {
+      const matchesName = campaign.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
 
       const matchesStatus =
-        statusFilter === "all" || campaign.status === statusFilter;
+      statusFilter === "all" || campaign.status === statusFilter;
 
-      return matchesName && matchesStatus;
-     })
-    .map((campaign) => (
+    return matchesName && matchesStatus;
+  })
+  .map((campaign) => (
 
               <div
                 key={campaign._id}
@@ -877,22 +878,11 @@ export default function Campaigns() {
                       alt={`${campaign.name} QR Code`}
                       className="h-40 w-40 rounded-lg border p-2"
                     />
+
                   </div>
+
                 )}
-                
-                
-                {/* DOWNLOAD QR CODE BUTTON */}
-                {campaign.qrCode && (
-                  <div className="mt-3 flex justify-center">
-                    <a
-                      href={campaign.qrCode}
-                      download={`${campaign.name}-QR-Code.png`}
-                      className="rounded-lg bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700"
-                    >
-                      Download QR Code
-                    </a>
-                  </div>
-                )}
+
 
                 {/* =========================
                     BUTTONS
@@ -934,7 +924,7 @@ export default function Campaigns() {
                   {/* Test Scan Button */}
 
                   <a
-                    href={`http://localhost:5000/api/scans/${campaign._id}`}
+                    href={`https://smart-qr-marketing-platform.onrender.com/api/scans/${campaign._id}`}
                     target="_blank"
                     rel="noreferrer"
                     className="rounded-lg bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700"

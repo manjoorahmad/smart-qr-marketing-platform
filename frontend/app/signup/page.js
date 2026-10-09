@@ -32,7 +32,7 @@ export default function Signup() {
 
       // Backend signup API ko request bhejna
       const response = await fetch(
-        "http://localhost:5000/api/users/signup",
+        "https://smart-qr-marketing-platform.onrender.com/api/users/signup",
         {
           method: "POST",
 
