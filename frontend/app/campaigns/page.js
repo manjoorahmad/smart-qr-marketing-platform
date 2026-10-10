@@ -865,24 +865,30 @@ export default function Campaigns() {
                 </div>
 
 
-                {/* =========================
-                    QR CODE IMAGE
-                    ========================= */}
+              
+        {/* =========================
+             QR CODE IMAGE + DOWNLOAD
+             ========================= */}
 
-                {campaign.qrCode && (
+        {campaign.qrCode && (
+            <div className="mt-6 flex flex-col items-center gap-3">
 
-                  <div className="mt-6 flex justify-center">
+             <img
+               src={campaign.qrCode}
+               alt={`${campaign.name} QR Code`}
+               className="h-40 w-40 rounded-lg border p-2"
+             />
 
-                    <img
-                      src={campaign.qrCode}
-                      alt={`${campaign.name} QR Code`}
-                      className="h-40 w-40 rounded-lg border p-2"
-                    />
+             <a
+               href={campaign.qrCode}
+               download={`${campaign.name.replace(/\s+/g, "-")}-QR.png`}
+               className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+             >
+               Download QR Code
+             </a>
 
-                  </div>
-
-                )}
-
+            </div>
+        )}
 
                 {/* =========================
                     BUTTONS
