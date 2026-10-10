@@ -14,6 +14,12 @@ const trackScan = async (req, res) => {
       });
     }
 
+
+    // Check karna ki campaign active hai ya nahi
+    if (campaign.status !== "active") {
+       return res.status(403).send("This campaign is inactive.");
+    }
+
     // QR scan karne wale device ki information
     const userAgent = req.headers["user-agent"] || "Unknown";
 
