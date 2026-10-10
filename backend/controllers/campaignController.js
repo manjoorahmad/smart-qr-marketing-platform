@@ -9,13 +9,35 @@ const createCampaign = async (req, res) => {
     // Frontend se campaign ki details lena
     const { name, description, targetUrl } = req.body;
 
-    // Check karna ki required fields mili hain ya nahi
-    if (!name || !targetUrl) {
-      return res.status(400).json({
-        message: "Campaign name and target URL are required",
-      });
+    // Campaign name validation
+    if (typeof name !== "string" || !name.trim()) {
+       return res.status(400).json({
+       message: "Campaign name cannot be empty",
+    });
     }
 
+    // Check karna ki required fields mili hain ya nahi
+       
+    if (!name || !targetUrl) {
+    return res.status(400).json({
+        message: "Campaign name and target URL are required",
+  });
+    }
+
+    // Target URL validate karna
+    try {
+    const parsedUrl = new URL(targetUrl);
+
+    if (!["http:", "https:"].includes(parsedUrl.protocol)) {
+        return res.status(400).json({
+        message: "Target URL must use HTTP or HTTPS",
+        });
+    }
+    } catch (error) {
+    return res.status(400).json({
+        message: "Please enter a valid URL, including http:// or https://",
+    });
+    }
     // Naya campaign create karna
     const campaign = await Campaign.create({
       name,
@@ -68,6 +90,39 @@ const getCampaigns = async (req, res) => {
 const updateCampaign = async (req, res) => {
   try {
     const { name, description, targetUrl, status } = req.body;
+
+     // Campaign name empty nahi hona chahiye
+     if (name !== undefined && (typeof name !== "string" || !name.trim())) {
+       return res.status(400).json({
+         message: "Campaign name cannot be empty",
+       });
+     }
+
+     // Target URL validate karna
+     if (targetUrl !== undefined) {
+       try {
+         if (typeof targetUrl !== "string") {
+           throw new Error("Invalid URL");
+         }
+
+         const parsedUrl = new URL(targetUrl);
+
+         if (!["http:", "https:"].includes(parsedUrl.protocol)) {
+      throw new Error("Invalid URL protocol");
+         }
+       } catch (error) {
+         return res.status(400).json({
+           message: "Please enter a valid HTTP or HTTPS URL",
+         });
+       }
+     }
+
+     // Status sirf active ya inactive ho sakta hai
+     if (status !== undefined && !["active", "inactive"].includes(status)) {
+       return res.status(400).json({
+         message: "Status must be active or inactive",
+       });
+     }
 
     const campaign = await Campaign.findOne({
       _id: req.params.id,

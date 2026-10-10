@@ -8,12 +8,14 @@ const campaignSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      maxlength: 100,
     },
 
     // Campaign ki description
     description: {
       type: String,
       trim: true,
+      maxlength: 500,
     },
 
     // QR scan hone ke baad user ko kis URL par bhejna hai
@@ -21,6 +23,7 @@ const campaignSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      maxlength: 2048,
     },
 
     // QR code ka generated data
