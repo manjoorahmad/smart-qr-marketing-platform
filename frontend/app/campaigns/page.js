@@ -70,9 +70,8 @@ export default function Campaigns() {
       const token = localStorage.getItem("token");
 
       if (!token) {
-        setError("Please login first.");
-        setLoading(false);
-        return;
+      window.location.replace("/login");
+      return;
       }
 
       const response = await fetch(
