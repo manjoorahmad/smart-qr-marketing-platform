@@ -748,13 +748,13 @@ export default function Campaigns() {
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
               placeholder="Search campaign by name..."
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-black"
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder:text-gray-500 outline-none focus:border-black"
             />
 
             <select
               value={statusFilter}
               onChange={(event) => setStatusFilter(event.target.value)}
-              className="rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-black sm:w-52"
+              className="rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-800 outline-none focus:border-black sm:w-52"
             >
               <option value="all">All Statuses</option>
               <option value="active">Active</option>
@@ -840,7 +840,7 @@ export default function Campaigns() {
                       Scans
                     </p>
 
-                    <p className="text-xl font-bold">
+                    <p className="text-xl font-bold text-gray-400">
                       {campaign.scanCount}
                     </p>
 
@@ -853,7 +853,7 @@ export default function Campaigns() {
                       Created
                     </p>
 
-                    <p className="text-sm font-medium">
+                    <p className="text-sm font-medium text-gray-400">
                       {new Date(
                         campaign.createdAt
                       ).toLocaleDateString()}
@@ -893,7 +893,7 @@ export default function Campaigns() {
                     BUTTONS
                     ========================= */}
 
-                <div className="mt-6 flex flex-wrap gap-3">
+                <div className="mt-6 flex flex-wrap gap-3 text-gray-400">
 
                   {/* View Button */}
                   <button
