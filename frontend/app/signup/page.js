@@ -113,7 +113,7 @@ export default function Signup() {
               onChange={(event) => setName(event.target.value)}
               placeholder="Enter your name"
               required
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-black"
+              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-500 outline-none focus:border-black"
             />
           </div>
 
@@ -130,7 +130,7 @@ export default function Signup() {
               onChange={(event) => setEmail(event.target.value)}
               placeholder="Enter your email"
               required
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-black"
+              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-500 outline-none focus:border-black"
             />
           </div>
 
@@ -148,7 +148,7 @@ export default function Signup() {
               placeholder="Enter your password"
               required
               minLength={6}
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-black"
+              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-500 outline-none focus:border-black"
             />
           </div>
 

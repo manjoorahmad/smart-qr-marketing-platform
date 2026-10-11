@@ -116,7 +116,7 @@ export default function Login() {
               onChange={(event) => setEmail(event.target.value)}
               placeholder="Enter your email"
               required
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-black"
+              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-500 outline-none focus:border-black"
             />
 
           </div>
@@ -135,7 +135,7 @@ export default function Login() {
               onChange={(event) => setPassword(event.target.value)}
               placeholder="Enter your password"
               required
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-black"
+              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-500 outline-none focus:border-black"
             />
 
           </div>
