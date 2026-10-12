@@ -15,43 +15,7 @@ const MATERIALS = {
   Acrylic: { border: "#b8c9dc", shadow: "0 18px 40px #0f172a25" },
   "Foam Board": { border: "#e2e8f0", shadow: "0 12px 25px #0f172a18" },
   PVC: { border: "#cbd5e1", shadow: "0 14px 30px #0f172a20" },
-  };
-  
-const QR_TEMPLATES = [
-  {
-    id: "classic",
-    name: "Classic",
-    background: "#ffffff",
-    qrColor: "#111827",
-    textColor: "#111827",
-    accentColor: "#111827",
-  },
-  {
-    id: "modern",
-    name: "Modern",
-    background: "#eef2ff",
-    qrColor: "#4338ca",
-    textColor: "#1e1b4b",
-    accentColor: "#6d5dfb",
-  },
-  {
-    id: "business",
-    name: "Business",
-    background: "#f0fdf4",
-    qrColor: "#15803d",
-    textColor: "#14532d",
-    accentColor: "#15803d",
-  },
-  {
-    id: "offers",
-    name: "Offers",
-    background: "#fff7ed",
-    qrColor: "#9a3412",
-    textColor: "#7c2d12",
-    accentColor: "#ea580c",
-  },
-];
-
+};
 
 export default function QRStandeeDesigner() {
   const canvasRef = useRef(null);

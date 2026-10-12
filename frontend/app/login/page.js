@@ -75,10 +75,10 @@ export default function Login() {
             <QRLogo />
           </div>
           <h1 style={{ fontSize: "26px", fontWeight: 800, color: "#f1f5f9", marginBottom: "6px" }}>
-            Welcome back
+            Welcome Back
           </h1>
           <p style={{ fontSize: "14px", color: "#64748b" }}>
-            Sign in to your Smart QR Marketing account
+            Log in to your Smart QR Marketing account
           </p>
         </div>
 
@@ -179,7 +179,7 @@ export default function Login() {
               boxShadow: "0 4px 14px rgba(99,102,241,0.35)",
             }}
           >
-            {loading ? "Signing in..." : "Sign In"}
+            {loading ? "Signing in..." : "Log In"}
           </button>
         </form>
 
