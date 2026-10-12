@@ -179,7 +179,7 @@ export default function Login() {
               boxShadow: "0 4px 14px rgba(99,102,241,0.35)",
             }}
           >
-            {loading ? "Signing in..." : "Log In"}
+            {loading ? "Logging in..." : "Log In"}
           </button>
         </form>
 
