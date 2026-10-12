@@ -2,6 +2,7 @@ const express = require("express");
 const {
   createCampaign,
   getCampaigns,
+  getCampaignById,
   updateCampaign,
   deleteCampaign,
   generateQRCode,
@@ -12,11 +13,13 @@ const authMiddleware = require("../middleware/authMiddleware");
 const router = express.Router();
 
 // Create Campaign API
-// Is route ko access karne ke liye login token required hai
 router.post("/", authMiddleware, createCampaign);
 
-// Get all campaigns of logged-in user
+// Get all campaigns of logged-in user (with search, filter, sort, pagination)
 router.get("/", authMiddleware, getCampaigns);
+
+// Get single campaign by ID
+router.get("/:id", authMiddleware, getCampaignById);
 
 // Update Campaign API
 router.put("/:id", authMiddleware, updateCampaign);
@@ -24,7 +27,7 @@ router.put("/:id", authMiddleware, updateCampaign);
 // Delete Campaign API
 router.delete("/:id", authMiddleware, deleteCampaign);
 
-// Generate QR Code API
+// Generate QR Code API (with color customization)
 router.post("/:id/qr", authMiddleware, generateQRCode);
 
 module.exports = router;

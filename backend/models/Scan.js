@@ -22,6 +22,25 @@ const scanSchema = new mongoose.Schema(
       default: "Unknown",
     },
 
+    // Referrer information (source jahan se scan request aayi)
+    referrer: {
+      type: String,
+      default: "Direct",
+    },
+
+    // Scan status: success (redirected), expired, scheduled, inactive
+    status: {
+      type: String,
+      enum: ["success", "expired", "scheduled", "inactive"],
+      default: "success",
+    },
+
+    // IP address
+    ip: {
+      type: String,
+      default: "",
+    },
+
     // Scan kab hua
     scannedAt: {
       type: Date,

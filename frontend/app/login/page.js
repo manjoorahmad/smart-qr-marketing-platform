@@ -1,180 +1,201 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useToast } from "../context/ToastContext";
 
-// Login page
-// Ye page user ko backend ke saath login karayega
+const API_URL = "https://smart-qr-marketing-platform.onrender.com/api";
+
+const QRLogo = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="3" width="5" height="5" /><rect x="16" y="3" width="5" height="5" />
+    <rect x="3" y="16" width="5" height="5" />
+    <path d="M21 16h-3a2 2 0 0 0-2 2v3" /><path d="M21 21v.01" />
+    <path d="M12 7v3a2 2 0 0 1-2 2H7" /><path d="M3 12h.01" /><path d="M12 3h.01" />
+    <path d="M12 16v.01" /><path d="M16 12h1" /><path d="M21 12v.01" /><path d="M12 21v-1" />
+  </svg>
+);
+
 export default function Login() {
-
-  // Email ki value store karne ke liye
   const [email, setEmail] = useState("");
-
-  // Password ki value store karne ke liye
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const toast = useToast();
 
-  // Login ke time message show karne ke liye
-  const [message, setMessage] = useState("");
+  // Already logged in check
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) window.location.href = "/";
+  }, []);
 
-  // Form submit hone par ye function chalega
-  const handleLogin = async (event) => {
-
-    // Page reload hone se rokna
-    event.preventDefault();
-
-    // Purana message clear karna
-    setMessage("");
-
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
+      setLoading(true);
 
-      // Backend login API ko request bhejna
-      const response = await fetch(
-        "https://smart-qr-marketing-platform.onrender.com/api/users/login",
-        {
-          method: "POST",
+      const response = await fetch(`${API_URL}/users/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-          // Backend ko batana ki JSON data bhej rahe hain
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          // Email aur password backend ko bhejna
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-        }
-      );
-
-      // Backend ka response JSON me convert karna
       const data = await response.json();
 
-      // Agar login successful hai
       if (response.ok) {
-
-        // JWT token browser ke localStorage me save karna
         localStorage.setItem("token", data.token);
-
-        // User information bhi save karna
-        localStorage.setItem(
-          "user",
-          JSON.stringify(data.user)
-        );
-
-        // Success message
-        setMessage("Login successful!");
-
-        // Dashboard par bhejna
+        localStorage.setItem("user", JSON.stringify(data.user));
+        toast.success("Welcome back!", `Hello ${data.user.name} 👋`);
         window.location.href = "/";
       } else {
-
-        // Backend se aaya error message
-        setMessage(data.message || "Login failed");
+        toast.error("Login failed", data.message || "Invalid email or password.");
       }
-
-    } catch (error) {
-
-      // Server connect na hone par error
-      console.error("Login Error:", error);
-
-      setMessage("Server se connection nahi ho raha.");
+    } catch (err) {
+      toast.error("Connection error", "Could not connect to server. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
-
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-100 p-6">
+    <div className="auth-container">
+      <div className="auth-card">
+        {/* Logo */}
+        <div style={{ textAlign: "center", marginBottom: "32px" }}>
+          <div style={{
+            width: "60px",
+            height: "60px",
+            background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+            borderRadius: "16px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            margin: "0 auto 16px",
+            boxShadow: "0 8px 24px rgba(99,102,241,0.4)",
+          }}>
+            <QRLogo />
+          </div>
+          <h1 style={{ fontSize: "26px", fontWeight: 800, color: "#f1f5f9", marginBottom: "6px" }}>
+            Welcome back
+          </h1>
+          <p style={{ fontSize: "14px", color: "#64748b" }}>
+            Sign in to your Smart QR Marketing account
+          </p>
+        </div>
 
-      {/* Login Card */}
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
-
-        {/* Page Heading */}
-        <h1 className="text-3xl font-bold text-gray-900">
-          Welcome Back
-        </h1>
-
-        <p className="mt-2 text-gray-600">
-          Login to your Smart QR Marketing account.
-        </p>
-
-
-        {/* Login Form */}
-        <form
-          onSubmit={handleLogin}
-          className="mt-8 space-y-5"
-        >
-
-          {/* Email Input */}
-          <div>
-
-            <label className="mb-2 block font-medium text-gray-700">
-              Email
+        {/* Form */}
+        <form onSubmit={handleLogin}>
+          <div style={{ marginBottom: "16px" }}>
+            <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "6px" }}>
+              Email Address
             </label>
-
             <input
               type="email"
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-500 outline-none focus:border-black"
+              id="login-email"
+              style={{
+                width: "100%",
+                padding: "12px 14px",
+                background: "rgba(255,255,255,0.05)",
+                border: "1.5px solid rgba(255,255,255,0.1)",
+                borderRadius: "10px",
+                color: "#f1f5f9",
+                fontSize: "14px",
+                outline: "none",
+                fontFamily: "inherit",
+                transition: "border-color 150ms ease",
+              }}
+              onFocus={(e) => e.target.style.borderColor = "#6366f1"}
+              onBlur={(e) => e.target.style.borderColor = "rgba(255,255,255,0.1)"}
             />
-
           </div>
 
-
-          {/* Password Input */}
-          <div>
-
-            <label className="mb-2 block font-medium text-gray-700">
+          <div style={{ marginBottom: "24px" }}>
+            <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "6px" }}>
               Password
             </label>
-
-            <input
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              placeholder="Enter your password"
-              required
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-500 outline-none focus:border-black"
-            />
-
+            <div style={{ position: "relative" }}>
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                required
+                id="login-password"
+                style={{
+                  width: "100%",
+                  padding: "12px 44px 12px 14px",
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1.5px solid rgba(255,255,255,0.1)",
+                  borderRadius: "10px",
+                  color: "#f1f5f9",
+                  fontSize: "14px",
+                  outline: "none",
+                  fontFamily: "inherit",
+                  transition: "border-color 150ms ease",
+                }}
+                onFocus={(e) => e.target.style.borderColor = "#6366f1"}
+                onBlur={(e) => e.target.style.borderColor = "rgba(255,255,255,0.1)"}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: "absolute",
+                  right: "12px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "none",
+                  border: "none",
+                  color: "#64748b",
+                  cursor: "pointer",
+                  fontSize: "16px",
+                }}
+                id="login-toggle-password"
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </button>
+            </div>
           </div>
 
-
-          {/* Login Button */}
           <button
             type="submit"
-            className="w-full rounded-lg bg-black px-4 py-3 font-medium text-white hover:bg-gray-800"
+            disabled={loading}
+            id="login-submit-btn"
+            style={{
+              width: "100%",
+              padding: "13px",
+              background: loading ? "rgba(99,102,241,0.6)" : "linear-gradient(135deg, #6366f1, #8b5cf6)",
+              border: "none",
+              borderRadius: "10px",
+              color: "white",
+              fontSize: "15px",
+              fontWeight: 700,
+              cursor: loading ? "not-allowed" : "pointer",
+              fontFamily: "inherit",
+              transition: "all 150ms ease",
+              boxShadow: "0 4px 14px rgba(99,102,241,0.35)",
+            }}
           >
-            Login
+            {loading ? "Signing in..." : "Sign In"}
           </button>
-
         </form>
 
-
-        {/* Backend se aaya message */}
-        {message && (
-          <p className="mt-4 text-center text-sm font-medium">
-            {message}
+        <div style={{ marginTop: "24px", textAlign: "center" }}>
+          <p style={{ fontSize: "14px", color: "#64748b" }}>
+            Don't have an account?{" "}
+            <a
+              href="/signup"
+              style={{ color: "#6366f1", fontWeight: 600, textDecoration: "none" }}
+              id="login-signup-link"
+            >
+              Create account
+            </a>
           </p>
-        )}
-
-
-        {/* Signup Link */}
-        <p className="mt-6 text-center text-sm text-gray-600">
-          Don't have an account?{" "}
-
-          <a
-            href="/signup"
-            className="font-semibold text-black hover:underline"
-          >
-            Sign Up
-          </a>
-
-        </p>
-
+        </div>
       </div>
-
-    </main>
+    </div>
   );
 }

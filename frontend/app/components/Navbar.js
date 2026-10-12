@@ -22,72 +22,34 @@ export default function Navbar() {
 
 
   return (
-    <nav className="flex items-center justify-between bg-white px-8 py-4 shadow">
-
-      {/* =========================
-          LOGO / PROJECT NAME
-          ========================= */}
-
+    <nav className="dashboard-topnav" style={{ position: "static", justifyContent: "space-between" }}>
       <div>
-
-        <h1 className="text-xl font-bold text-gray-900">
+        <h1 style={{ fontSize: "18px", fontWeight: 700, color: "var(--text-primary)" }}>
           Smart QR Marketing
         </h1>
-
       </div>
 
-
-      {/* =========================
-          NAVIGATION LINKS
-          ========================= */}
-
-      <div className="flex items-center gap-6">
-
-        <a
-          href="/"
-          className="font-medium text-gray-700 hover:text-black"
-        >
+      <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+        <a href="/" style={{ color: "var(--text-secondary)", textDecoration: "none", fontSize: "14px", fontWeight: 500 }}>
           Dashboard
         </a>
-
-
-        <a
-          href="/campaigns"
-          className="font-medium text-gray-700 hover:text-black"
-        >
+        <a href="/campaigns" style={{ color: "var(--text-secondary)", textDecoration: "none", fontSize: "14px", fontWeight: 500 }}>
           Campaigns
         </a>
-
-
-        <a
-          href="/analytics"
-          className="font-medium text-gray-700 hover:text-black"
-        >
+        <a href="/analytics" style={{ color: "var(--text-secondary)", textDecoration: "none", fontSize: "14px", fontWeight: 500 }}>
           Analytics
         </a>
-
-
-        <a
-          href="/profile"
-          className="font-medium text-gray-700 hover:text-black"
-        >
+        <a href="/profile" style={{ color: "var(--text-secondary)", textDecoration: "none", fontSize: "14px", fontWeight: 500 }}>
           Profile
         </a>
-
       </div>
-
-
-      {/* =========================
-          LOGOUT BUTTON
-          ========================= */}
 
       <button
         onClick={handleLogout}
-        className="rounded-lg bg-black px-4 py-2 text-white hover:bg-gray-800"
+        className="btn btn-secondary btn-sm"
       >
         Logout
       </button>
-
     </nav>
   );
 }

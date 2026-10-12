@@ -1,191 +1,156 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
+import DashboardLayout from "../components/DashboardLayout";
+import { apiCall } from "../lib/api";
 
-// Profile page
-// Ye logged-in user ki information backend se fetch karega
+// Profile page wrapped in DashboardLayout
 export default function Profile() {
-
-  // User information store karne ke liye
   const [user, setUser] = useState(null);
-
-  // Loading ke liye
   const [loading, setLoading] = useState(true);
-
-  // Error message ke liye
   const [error, setError] = useState("");
-
-
-  // =========================
-  // FETCH USER PROFILE
-  // =========================
 
   useEffect(() => {
     fetchProfile();
   }, []);
 
-
   const fetchProfile = async () => {
     try {
-
-      // Login ke baad save hua JWT token
-      const token = localStorage.getItem("token");
-
-      // Token nahi hai
-      if (!token) {
-        setError("Please login first.");
-        setLoading(false);
-        return;
-      }
-
-
-      // Backend profile API
-      const response = await fetch(
-        "https://smart-qr-marketing-platform.onrender.com/api/users/profile",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-
-      const data = await response.json();
-
-
-      if (response.ok) {
-
-        // Backend se user information save kar rahe hain
-        setUser(data.user);
-
-      } else {
-
-        setError(
-          data.message || "Profile fetch nahi ho payi."
-        );
-
-      }
-
-    } catch (error) {
-
-      console.error("Profile Error:", error);
-
-      setError("Server se connection nahi ho raha.");
-
+      setLoading(true);
+      const data = await apiCall("/users/profile");
+      setUser(data.user);
+    } catch (err) {
+      console.error("Profile Error:", err);
+      setError(err.message || "Could not load user profile.");
     } finally {
-
       setLoading(false);
-
     }
   };
 
-
   return (
-    <>
-      {/* Navbar */}
-      <Navbar />
+    <DashboardLayout>
+      {/* Page Header */}
+      <div className="page-header" style={{ marginBottom: "24px" }}>
+        <h1 className="page-title">Profile & Account Settings</h1>
+        <p className="page-subtitle">
+          Manage your personal information and marketing platform account.
+        </p>
+      </div>
 
-
-      <main className="min-h-screen bg-gray-100 p-8">
-
-        {/* Page Header */}
-
-        <div className="mb-8">
-
-          <h1 className="text-3xl font-bold text-gray-900">
-            Profile
-          </h1>
-
-          <p className="mt-2 text-gray-600">
-            View your Smart QR Marketing account information.
-          </p>
-
+      {/* Error */}
+      {error && (
+        <div className="alert alert-error" style={{ marginBottom: "20px" }}>
+          <span>⚠️</span> {error}
         </div>
+      )}
 
+      {loading ? (
+        <div className="card" style={{ maxWidth: "680px", padding: "28px" }}>
+          <div className="skeleton" style={{ width: "64px", height: "64px", borderRadius: "50%", marginBottom: "20px" }} />
+          <div className="skeleton" style={{ width: "40%", height: "20px", marginBottom: "12px" }} />
+          <div className="skeleton" style={{ width: "60%", height: "16px", marginBottom: "24px" }} />
+          <div className="skeleton" style={{ width: "100%", height: "40px", marginBottom: "12px" }} />
+          <div className="skeleton" style={{ width: "100%", height: "40px" }} />
+        </div>
+      ) : user ? (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "24px", maxWidth: "900px" }}>
+          {/* Personal Info Card */}
+          <div className="card">
+            <div className="card-header">
+              <h2 className="card-title">👤 Personal Information</h2>
+            </div>
+            <div className="card-body">
+              <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "24px" }}>
+                <div
+                  style={{
+                    width: "68px",
+                    height: "68px",
+                    borderRadius: "50%",
+                    background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+                    color: "white",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "26px",
+                    fontWeight: 700,
+                    boxShadow: "0 4px 14px rgba(99,102,241,0.3)",
+                  }}
+                >
+                  {user.name?.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <h3 style={{ fontSize: "18px", fontWeight: 700, color: "var(--text-primary)" }}>
+                    {user.name}
+                  </h3>
+                  <p style={{ fontSize: "13px", color: "var(--text-secondary)" }}>
+                    {user.email}
+                  </p>
+                  <span className="badge badge-active" style={{ marginTop: "6px" }}>
+                    ● Active User
+                  </span>
+                </div>
+              </div>
 
-        {/* Error */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                <div style={{ padding: "12px 16px", background: "var(--bg-primary)", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)" }}>
+                  <p style={{ fontSize: "11px", fontWeight: 600, textTransform: "uppercase", color: "var(--text-tertiary)" }}>
+                    FULL NAME
+                  </p>
+                  <p style={{ fontSize: "14px", fontWeight: 600, color: "var(--text-primary)", marginTop: "4px" }}>
+                    {user.name}
+                  </p>
+                </div>
 
-        {error && (
-          <div className="mb-6 rounded-lg bg-red-100 p-4 text-red-700">
-            {error}
+                <div style={{ padding: "12px 16px", background: "var(--bg-primary)", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)" }}>
+                  <p style={{ fontSize: "11px", fontWeight: 600, textTransform: "uppercase", color: "var(--text-tertiary)" }}>
+                    EMAIL ADDRESS
+                  </p>
+                  <p style={{ fontSize: "14px", fontWeight: 600, color: "var(--text-primary)", marginTop: "4px" }}>
+                    {user.email}
+                  </p>
+                </div>
+
+                <div style={{ padding: "12px 16px", background: "var(--bg-primary)", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)" }}>
+                  <p style={{ fontSize: "11px", fontWeight: 600, textTransform: "uppercase", color: "var(--text-tertiary)" }}>
+                    ACCOUNT ID
+                  </p>
+                  <p style={{ fontSize: "12px", fontFamily: "monospace", color: "var(--text-secondary)", marginTop: "4px", wordBreak: "break-all" }}>
+                    {user._id}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-        )}
 
-
-        {/* Loading */}
-
-        {loading ? (
-
-          <p className="text-gray-600">
-            Loading profile...
-          </p>
-
-        ) : user ? (
-
-          /* =========================
-             PROFILE CARD
-             ========================= */
-
-          <section className="max-w-2xl rounded-xl bg-white p-8 shadow">
-
-            {/* Profile Icon */}
-
-            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-black text-3xl font-bold text-white">
-              {user.name?.charAt(0).toUpperCase()}
+          {/* Quick Actions & Security */}
+          <div className="card">
+            <div className="card-header">
+              <h2 className="card-title">🔒 Account Status</h2>
             </div>
+            <div className="card-body">
+              <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                <div style={{ padding: "16px", borderRadius: "var(--radius-md)", background: "var(--color-primary-light)" }}>
+                  <p style={{ fontSize: "14px", fontWeight: 600, color: "var(--color-primary)", marginBottom: "4px" }}>
+                    ⚡ Pro Marketing Tier
+                  </p>
+                  <p style={{ fontSize: "12px", color: "var(--text-secondary)" }}>
+                    Unlimited campaigns, high-res QR downloads, and full scan analytics tracking are enabled.
+                  </p>
+                </div>
 
-
-            {/* Name */}
-
-            <div className="border-b py-4">
-
-              <p className="text-sm text-gray-500">
-                Name
-              </p>
-
-              <p className="mt-1 text-lg font-semibold text-gray-900">
-                {user.name}
-              </p>
-
+                <div style={{ display: "flex", gap: "10px", marginTop: "12px" }}>
+                  <a href="/campaigns" className="btn btn-primary" style={{ flex: 1 }}>
+                    View Campaigns
+                  </a>
+                  <a href="/analytics" className="btn btn-secondary" style={{ flex: 1 }}>
+                    View Analytics
+                  </a>
+                </div>
+              </div>
             </div>
-
-
-            {/* Email */}
-
-            <div className="border-b py-4">
-
-              <p className="text-sm text-gray-500">
-                Email
-              </p>
-
-              <p className="mt-1 text-lg font-semibold text-gray-900">
-                {user.email}
-              </p>
-
-            </div>
-
-
-            {/* User ID */}
-
-            <div className="py-4">
-
-              <p className="text-sm text-gray-500">
-                User ID
-              </p>
-
-              <p className="mt-1 break-all text-sm text-gray-700">
-                {user._id}
-              </p>
-
-            </div>
-
-          </section>
-
-        ) : null}
-
-      </main>
-    </>
+          </div>
+        </div>
+      ) : null}
+    </DashboardLayout>
   );
 }
