@@ -3,6 +3,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import QRCode from "qrcode";
+import { useTheme } from "../context/ThemeContext";
 
 const SIZES = {
   A4: { width: 210, height: 297 },
@@ -18,8 +19,11 @@ const MATERIALS = {
 };
 
 export default function QRStandeeDesigner() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const canvasRef = useRef(null);
   const qrImageRef = useRef(null);
+  
 
   const [campaignUrl, setCampaignUrl] = useState("https://example.com");
   const [title, setTitle] = useState("SCAN & DISCOVER");
@@ -242,23 +246,25 @@ export default function QRStandeeDesigner() {
   };
 
   const fieldStyle = {
-    width: "100%",
-    padding: "10px 12px",
-    borderRadius: "9px",
-    border: "1px solid #dbe2ea",
-    background: "#ffffff",
-    color: "#111827",
-    fontSize: "14px",
-    boxSizing: "border-box",
-  };
+  width: "100%",
+  padding: "10px 12px",
+  borderRadius: "9px",
+  border: `1px solid ${isDark ? "#374151" : "#dbe2ea"}`,
+  background: isDark ? "#111827" : "#ffffff",
+  color: isDark ? "#f9fafb" : "#111827",
+  fontSize: "14px",
+  boxSizing: "border-box",
+};
 
-  const labelStyle = {
-    display: "block",
-    fontSize: "13px",
-    fontWeight: "650",
-    marginBottom: "7px",
-    color: "var(--text-primary, #111827)",
-  };
+  
+const labelStyle = {
+  display: "block",
+  fontSize: "13px",
+  fontWeight: "650",
+  marginBottom: "7px",
+  color: isDark ? "#f9fafb" : "#111827",
+};
+
 
   return (
     <div
@@ -275,13 +281,26 @@ export default function QRStandeeDesigner() {
           padding: "22px",
           borderRadius: "16px",
           border: "1px solid var(--border-color, #e2e8f0)",
-          background: "var(--bg-card, #ffffff)",
+          background: "var(--bg-secondary, #ffffff)",
         }}
       >
-        <h2 style={{ fontSize: "19px", margin: "0 0 5px" }}>
-          Customize your standee
-        </h2>
-        <p style={{ color: "#64748b", fontSize: "13px", margin: "0 0 22px" }}>
+        <h2
+         style={{
+             fontSize: "19px",
+             margin: "0 0 5px",
+             color: "var(--text-primary, #0f172a)",
+         }}
+        >
+
+       Customize your standee
+       </h2>
+              <p
+         style={{
+           color: "var(--text-secondary, #475569)",
+           fontSize: "13px",
+           margin: "0 0 22px",
+         }}
+       >
           Changes appear in the preview.
         </p>
 
@@ -493,7 +512,7 @@ export default function QRStandeeDesigner() {
           padding: "22px",
           borderRadius: "16px",
           border: "1px solid var(--border-color, #e2e8f0)",
-          background: "var(--bg-card, #ffffff)",
+          background: "var(--bg-secondary, #ffffff)",
         }}
       >
         <div
@@ -507,9 +526,22 @@ export default function QRStandeeDesigner() {
           }}
         >
           <div>
-            <h2 style={{ margin: 0, fontSize: "19px" }}>Live canvas</h2>
-            <p style={{ color: "#64748b", fontSize: "13px", margin: "5px 0 0" }}>
-              {size === "Custom"
+            <h2
+                 style={{
+                   margin: 0,
+                   fontSize: "19px",
+                   color: "var(--text-primary, #0f172a)",
+                 }}
+               >
+                 Live canvas
+            </h2>
+            <p
+              style={{
+                color: "var(--text-secondary, #475569)",
+                  fontSize: "13px",
+              margin: "5px 0 0",
+            }}>
+                {size === "Custom"
                 ? `${customWidth} × ${customHeight} mm`
                 : `${size} · ${SIZES[size].width} × ${SIZES[size].height} mm`}
               {" · "}
@@ -535,7 +567,7 @@ export default function QRStandeeDesigner() {
             display: "flex",
             justifyContent: "center",
             padding: "24px",
-            background: "#f1f5f9",
+            background: "var(--bg-tertiary, #f1f5f9)",
             borderRadius: "14px",
             overflow: "auto",
           }}
