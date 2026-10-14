@@ -18,7 +18,7 @@ A web-based QR marketing platform that allows users to create marketing campaign
 
 ### 3. Customizable QR Standee Designer
 
-![Customizable QR Standee Designer](./CustomizableQRstanderDesigner.png)
+![Customizable QR Standee Designer](./Customizable-QR-Standee-Designer.png)
 
 ## ✨ Features
 
