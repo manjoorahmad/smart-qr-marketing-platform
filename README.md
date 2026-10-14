@@ -14,6 +14,9 @@ A web-based QR marketing platform that allows users to create marketing campaign
 ### Campaign Management
 ![Campaign Management](./campaigns.png)
 
+### Customizable QR Standee Designer
+![Customizable QR Standee Designer](./Customizable QR Standee Designer.png)
+
 ## ✨ Features
 
 - User Signup and Login
