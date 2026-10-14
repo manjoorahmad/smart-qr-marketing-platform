@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useToast } from "../context/ToastContext";
+import { API_BASE_URL } from "../lib/api";
 
-const API_URL = "https://smart-qr-marketing-platform.onrender.com/api";
+const API_URL = API_BASE_URL;
 
 const QRLogo = () => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

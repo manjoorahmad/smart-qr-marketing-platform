@@ -1,9 +1,10 @@
 // Central API configuration
 // Yahan se saari API calls hogi - URL ek jagah se manage hogi
 
-const API_BASE_URL =
+export const API_BASE_URL = (
   process.env.NEXT_PUBLIC_API_URL ||
-  "https://smart-qr-marketing-platform.onrender.com/api";
+  "https://smart-qr-marketing-platform.onrender.com/api"
+).replace(/\/+$/, "");
 
 // Auth token get karna
 export const getToken = () => {
@@ -46,4 +47,3 @@ export const apiCall = async (endpoint, options = {}) => {
 };
 
 export default API_BASE_URL;
-

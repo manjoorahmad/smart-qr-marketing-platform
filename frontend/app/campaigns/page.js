@@ -3,11 +3,11 @@
 import { useEffect, useState, useCallback } from "react";
 import DashboardLayout from "../components/DashboardLayout";
 import ConfirmDialog from "../components/ConfirmDialog";
-import { apiCall } from "../lib/api";
+import { apiCall, API_BASE_URL } from "../lib/api";
 import { useToast } from "../context/ToastContext";
 
 // API Base URL for scan tracking
-const SCAN_BASE_URL = "https://smart-qr-marketing-platform.onrender.com/api/scans";
+const SCAN_BASE_URL = `${API_BASE_URL}/scans`;
 
 // --- Icons ---
 const CopyIcon = () => (

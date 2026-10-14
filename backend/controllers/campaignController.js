@@ -72,7 +72,8 @@ const createCampaign = async (req, res) => {
     });
 
     // Permanent scan URL for QR code
-    const baseUrl = process.env.SCAN_BASE_URL || (req.get("host") ? `${req.protocol}://${req.get("host")}` : "https://smart-qr-marketing-platform.onrender.com");
+    const rawBaseUrl = process.env.SCAN_BASE_URL || process.env.API_URL || process.env.BASE_URL || (req.get("host") ? `${req.protocol}://${req.get("host")}` : "https://smart-qr-marketing-platform.onrender.com");
+    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, "").replace(/\/+$/, "");
     const scanUrl = `${baseUrl}/api/scans/${campaign._id}`;
 
     // Auto-generate default QR Code upon creation
@@ -360,7 +361,8 @@ const generateQRCode = async (req, res) => {
     }
 
     // QR scan hone par backend ke scan route par jayega
-    const baseUrl = process.env.SCAN_BASE_URL || (req.get("host") ? `${req.protocol}://${req.get("host")}` : "https://smart-qr-marketing-platform.onrender.com");
+    const rawBaseUrl = process.env.SCAN_BASE_URL || process.env.API_URL || process.env.BASE_URL || (req.get("host") ? `${req.protocol}://${req.get("host")}` : "https://smart-qr-marketing-platform.onrender.com");
+    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, "").replace(/\/+$/, "");
     const scanUrl = `${baseUrl}/api/scans/${campaign._id}`;
 
     // Custom colors (optional, with defaults)

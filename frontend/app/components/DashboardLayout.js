@@ -10,6 +10,7 @@ const PAGE_TITLES = {
   "/campaigns": "Campaigns",
   "/analytics": "Analytics",
   "/profile": "Profile",
+  "/qr-templates": "QR Standee Designer",
 };
 
 const MenuIcon = () => (

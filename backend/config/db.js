@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const dns = require("node:dns/promises");
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 // MongoDB se connect karne ka function
 const connectDB = async () => {
