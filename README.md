@@ -10,11 +10,7 @@ A web-based QR marketing platform that allows users to create marketing campaign
 
 Dashboard
 
-"Smart QR Marketing Platform Dashboard" (./dashboard.png)
-
 Campaign Management
-
-"Campaign Management" (./campaigns.png)
 
 ✨ Features
 
