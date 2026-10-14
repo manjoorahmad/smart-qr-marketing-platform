@@ -8,14 +8,17 @@ A web-based QR marketing platform that allows users to create marketing campaign
 
 ## 📸 Project Screenshots
 
-### Dashboard
+### 1. Dashboard
+
 ![Smart QR Marketing Platform Dashboard](./dashboard.png)
 
-### Campaign Management
+### 2. Campaign Management
+
 ![Campaign Management](./campaigns.png)
 
-### Customizable QR Standee Designer
-![Customizable QR Standee Designer](./Customizable QR Standee Designer.png)
+### 3. Customizable QR Standee Designer
+
+![Customizable QR Standee Designer](./qr-standee-designer.png)
 
 ## ✨ Features
 
@@ -25,6 +28,7 @@ A web-based QR marketing platform that allows users to create marketing campaign
 - QR Scan Tracking
 - Analytics Dashboard
 - Campaign Search and Status Filter
+- Customizable QR Standee Designer
 - Multiple QR Standee Sizes and Layout Options
 - QR Standee Design Customization
 - JWT Authentication
