@@ -10,11 +10,11 @@ A web-based QR marketing platform that allows users to create marketing campaign
 
 Dashboard
 
-"Dashboard" (./dashboard.png)
+"Dashboard Screenshot" (./dashboard.png)
 
 Campaign Management
 
-"Campaign Management" (./campaigns.png)
+"Campaign Screenshot" (./campaigns.png)
 
 ✨ Features
 
